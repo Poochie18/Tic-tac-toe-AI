@@ -8,172 +8,106 @@ using System.Globalization;
 
 public class GameLogic : MonoBehaviour
 {
-    public int whichPlayer; //1 - X, 2 = 0
-    public int turnCount;
-    public Text whoseTurn;
-    public Text winner;
-    public Button tile;
-    public Transform panel;
-    public Button[] titles;
-    public bool gamePause = false;
-    public int[] markedTiles = new int[9];
+    public static event Action<int[]> AITurn;
+    public static event Action<int> CalculateNewWeight;
 
-    Dictionary<int, string> playersIcons = new Dictionary<int, string> { {1,"X" }, { 2, "O" } };
-    Dictionary<string, float> all = new Dictionary<string, float>();
+    //public static Dictionary<string, float> allStatements = new Dictionary<string, float>();
 
-    List<string> AISteps = new List<string>();
+    [SerializeField] private int whichPlayer; //1 - X, 2 = 0
+    
+    [SerializeField] private Button[] titles;
+    [SerializeField] private bool gamePause = false;
+    [SerializeField] private int[] markedTiles = new int[9];
 
-    private float alpfa = 0.1f;
+    private Dictionary<int, string> playersIcons = new Dictionary<int, string> { { 1, "X" }, { 2, "O" } };
+
+    public static int turnCount;
+
+    [SerializeField] private AIManager aiManager;
+    [SerializeField] private UIManager uiManager;
+
+    private void Awake()
+    {
+        if (PlayerPrefs.GetInt("FIRSTTIMEOPENING", 1) == 1)
+        {
+            Debug.Log("First Time Opening");
+
+            PlayerPrefs.SetInt("FIRSTTIMEOPENING", 0);
+
+            string path = Application.persistentDataPath + "/text2.txt";
+            TextAsset txtAsset = Resources.Load("text2") as TextAsset;
+            string txt = txtAsset.text;
+            System.IO.File.WriteAllText(path, txt);
+
+        }
+        else
+        {
+            Debug.Log("NOT First Time Opening");
+        }
+    }
+
 
     private void Start()
     {
+        uiManager.RestartGameEvent += GameSetup;
+        aiManager.ChangeTileIndex += ChangeStates;
         GameSetup();
     }
 
+
     void GameSetup()
     {
+        gamePause = false;
         whichPlayer = 1;
         turnCount = 0;
-        whoseTurn.text = playersIcons[1];
-        AISteps.Clear();
 
-        WritingFile();
-        for(int i = 0; i < markedTiles.Length; i++)
+        aiManager.ClearAITemp();
+        uiManager.ChangePlayerIcon(whichPlayer);
+
+        for (int i = 0; i < markedTiles.Length; i++)
         {
             markedTiles[i] = 0;
+            titles[i].interactable = true;
+            titles[i].GetComponentInChildren<Text>().text = null;
         }
     }
 
 
     public void PressTheTile(int tileIndex)
     {
-        turnCount++;
         ChangeStates(tileIndex);
+        CheckStatements();
+
+        if (!gamePause)
+        {
+            AITurn(markedTiles);
+            CheckStatements();
+        }
         
-        if (turnCount > 4)
-        {
-            CheckingWinner();
-        }
-
-        if (whichPlayer == 2 && !gamePause)
-        {
-            AITurn();
-        }
-
     }
+
+    void CheckStatements()
+    {
+        turnCount++;
+        uiManager.ChangePlayerIcon(whichPlayer);
+        if (turnCount > 4)
+            CheckingWinner();
+        whichPlayer = whichPlayer == 1 ? 2 : 1;
+    }
+
 
     void ChangeStates(int tileIndex)
     {
         markedTiles[tileIndex] = whichPlayer;
-        var tile = titles[tileIndex];
-        var localTile = tile.GetComponentInChildren<Text>();
-        localTile.text = playersIcons[whichPlayer];
+        Button tile = titles[tileIndex];
+        tile.GetComponentInChildren<Text>().text = playersIcons[whichPlayer];
+        //Text[] txts = tile.GetComponentsInChildren<Text>();
+        //txts[0].text = playersIcons[whichPlayer];
+        //txts[1].text = null;
         tile.interactable = false;
-        if (!gamePause)
-        {
-            whichPlayer = whichPlayer == 1 ? 2 : 1;
-        }
-        whoseTurn.text = playersIcons[whichPlayer];
+        
     }
 
-    void AITurn()
-    {  
-        MakePosibleMoves();       
-    }
-
-    void MakePosibleMoves()
-    {
-        List<string> posibleMoves = new List<string>();
-        string result = string.Join("", markedTiles);
-        for(int i = 0; i < result.Length; i++)
-        {
-            var temp = result;
-            if (result[i] == '0')
-            {
-                posibleMoves.Add(temp.Remove(i, 1).Insert(i, "2")) ;
-            }
-        }
-
-        string bestMove = "";
-        float bestScore = 0f;
-
-        foreach (KeyValuePair<string, float> keyValue in all)
-        {
-            foreach(var move in posibleMoves)
-            {
-                if (keyValue.Key == move)
-                {
-                    //Debug.Log($"{keyValue.Key} - {keyValue.Value}");
-                    if(bestScore < keyValue.Value)
-                    {
-                        bestScore = keyValue.Value;
-                        bestMove = keyValue.Key;
-                    }
-                    /*if (UnityEngine.Random.Range(0, 11) == 1)
-                    {
-                        bestScore = 100f;
-                    }*/
-                }
-            }  
-        }
-        //Debug.Log($"{bestMove} - {bestScore}");
-        AISteps.Add(bestMove);
-        for (int i = 0; i < result.Length; i++)
-        {
-            if (bestMove[i] != '0' && markedTiles[i] == 0)
-            {
-                Debug.Log($"{i}");
-                ChangeStates(i);
-            }
-        }
-    }
-
-    void WritingFile()
-    {
-        string path = @"F:\Repository\Tic-tac-toe\Assets\text2.txt";
-
-        using (StreamReader sr = new StreamReader(path, System.Text.Encoding.Default))
-        {
-            string line;
-            while ((line = sr.ReadLine()) != null)
-            {
-                all.Add(line.Split(' ')[0], Convert.ToSingle(line.Split(' ')[1]));
-            }
-        }
-    }
-
-    void CalculateNewWeights(int winner)
-    {
-        foreach (var keyValue in all)
-        {
-            foreach (var move in AISteps)
-            {
-                if(move == keyValue.Key)
-                {
-                    
-                    float newWeight = keyValue.Value + alpfa * (winner - keyValue.Value);
-                    all[keyValue.Key] = newWeight;
-                }
-            }
-        }
-        ReWriting();
-    }
-
-    void ReWriting()
-    {
-        Debug.Log("newWeight");
-        string path = @"F:\Repository\Tic-tac-toe\Assets\text2.txt";
-        FileStream file1 = new FileStream(path, FileMode.Create); //создаем файловый поток
-        StreamWriter writer = new StreamWriter(file1); //создаем «потоковый писатель» и связываем его с файловым потоком
-        foreach (var keyValue in all)
-        {
-            Debug.Log("Rewriting");
-            writer.Write(string.Join(" ", keyValue.Key, keyValue.Value));
-        }
-
-        Debug.Log("Rewriting Finish");     //записываем в файл
-        writer.Close(); //закрываем поток. Не закрыв поток, в файл ничего не запишется
-    }
 
     void CheckingWinner()
     {
@@ -189,25 +123,39 @@ public class GameLogic : MonoBehaviour
             markedTiles[0] == whichPlayer && markedTiles[4] == whichPlayer && markedTiles[8] == whichPlayer,
             markedTiles[2] == whichPlayer && markedTiles[4] == whichPlayer && markedTiles[6] == whichPlayer,
         };
-        foreach(var win in winChecksList)
+        foreach(bool win in winChecksList)
         {
             if (win)
             {
-                winner.text = "Winner";
-                Debug.Log($"{playersIcons[whichPlayer]} has won!");
+                uiManager.SetUpWinningText(whichPlayer);
+                //Debug.Log($"{ChangePlayerTurnSprite(whichPlayer);} has won!");
                 gamePause = true;
-                CalculateNewWeights(whichPlayer - 1);
+                CalculateNewWeight(whichPlayer - 1);
                 foreach (Button btn in titles)
                 {
                     btn.interactable = false;
                 }
-                
+                continue;
             }
+        }
+        CheckDraw();
+    }
+
+    void CheckDraw()
+    {
+        if (turnCount == 9 && !gamePause)
+        {
+            uiManager.SetUpDrawText();
+            gamePause = true;
         }
     }
 
-}
+    public void Restart()
+    {
+        GameSetup();
+    }
 
+}
 
 /*int right = -5;
 int left = 5;
