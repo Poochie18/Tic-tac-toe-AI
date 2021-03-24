@@ -20,8 +20,8 @@
 
 <h3> Victorious case</h3>
 
-<img src="https://user-images.githubusercontent.com/39067344/112289481-05c9e580-8c97-11eb-96ad-95fa0d9b75c5.jpg"  width="138" height="192" align="right" >
-<p align="left">So in case of victories in the status bars of his moves for this match there will be an increase. This means that the AI ​​will remember them as high-ranking the next time it is similar. </p>
+
+<p align="left">So in case of victories in the status bars of his moves for this match there will be an increase. This means that the AI ​​will remember them as high-ranking the next time it is similar. <img src="https://user-images.githubusercontent.com/39067344/112289481-05c9e580-8c97-11eb-96ad-95fa0d9b75c5.jpg"  width="138" height="192" align="right" ></p>
 
 <h3> Losing case</h3>
 
