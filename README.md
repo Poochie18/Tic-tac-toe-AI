@@ -29,5 +29,15 @@
 <img src="https://user-images.githubusercontent.com/39067344/112289504-09f60300-8c97-11eb-9b44-9c8746936015.jpg" width="147" height="192" align="right">
 <p>In case of defeats in the status bars of his moves for this match, there will be a decrease in coefficients. This means the AI ​​will remember them as negative moves on the next similar move.</p>
   </div>
-
+<br>
+<br>
+<br>
 <h2>Technologies</h2>
+<p>The main AI technology used was reinforcement learning. The main point of which is to praise the AI ​​for victories and punish for defeats. The implementation of these awards is in the txt file.</p>
+<p align="center"> <img src="https://user-images.githubusercontent.com/39067344/112297671-dcad5300-8c9e-11eb-86d5-5a79f448f1e9.png" width="500" height="500"></p>
+<p>For the software and visual component, the unity game engine and the C # programming language were used.</p>
+<p align="center"> 
+  <img src="https://user-images.githubusercontent.com/39067344/112299290-542fb200-8ca0-11eb-9a2a-2b882f13c08a.png" width="128" height="128">
+  <img src="https://user-images.githubusercontent.com/39067344/112299320-5b56c000-8ca0-11eb-8fbf-8d59f7a66cd1.png" width="114" height="128">
+</p>
+
