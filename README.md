@@ -1,4 +1,4 @@
-# Tic-tac-toe game with AI
+### Tic-tac-toe game with AI
 
-![tic tac toe](https://user-images.githubusercontent.com/39067344/112275515-5f76e380-8c88-11eb-8d5c-27fa38d04c78.png)
+![tic tac toe (1)](https://user-images.githubusercontent.com/39067344/112275705-8af9ce00-8c88-11eb-933a-5de71d76af9e.png)
 
