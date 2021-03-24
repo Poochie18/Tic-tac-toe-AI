@@ -5,9 +5,9 @@
 <h2>Description</h2>
 
 <p><img src="https://user-images.githubusercontent.com/39067344/112279609-c5656a00-8c8c-11eb-8a5d-9663c6b233ac.gif" align="right"></p>
-<p>This app is intended to be the first time AI is being used.<br> From a task that implied a textual implementation of tic-tac-toe, it grew into a full-fledged application for a phone with a visual component.</p>
-<p>
-  <a href="https://en.wikipedia.org/wiki/Reinforcement_learning#:~:text=Reinforcement%20learning%20(RL)%20is%20an,supervised%20learning%20and%20unsupervised%20learning.">Reinforcement learning</a> is used as an algorithm for AI. Since this method is good for a small number of variations of the match outcome. For convenience and understanding of the work, a line of the best states of the AI has been added to the application, as well as its recalculated values after a <span style= green>positive</span> / <span style="background:#FFFFCC">negative</span> outcome of the match.</p>
+<p>This app is intended to be the first time AI is being used.</p>
+<p>From a task that implied a textual implementation of tic-tac-toe, it grew into a full-fledged application for a phone with a visual component.</p>
+<p><a href="https://clck.ru/TtJAw">Reinforcement learning</a> is used as an algorithm for AI. Since this method is good for a small number of variations of the match outcome. For convenience and understanding of the work, a line of the best states of the AI has been added to the application, as well as its recalculated values after a <span style= green>positive</span> / <span style="background:#FFFFCC">negative</span> outcome of the match.</p>
 
 <h2>About</h2>
 
