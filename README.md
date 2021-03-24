@@ -33,7 +33,7 @@
 <br>
 <br>
 <h2>Technologies</h2>
-<p>The main AI technology used was reinforcement learning. The main point of which is to praise the AI ​​for victories and punish for defeats. The implementation of these awards is in the txt file.</p>
+<p>The main AI technology used was <a href="https://clck.ru/TtJAw">Reinforcement learning</a>. The main point of which is to praise the AI ​​for victories and punish for defeats. The implementation of these awards is in the txt file.</p>
 <p align="center"> <img src="https://user-images.githubusercontent.com/39067344/112297671-dcad5300-8c9e-11eb-86d5-5a79f448f1e9.png" width="500" height="500"></p>
 <p>For the software and visual component, the unity game engine and the C # programming language were used.</p>
 <p align="center"> 
