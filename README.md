@@ -41,3 +41,16 @@
   <img src="https://user-images.githubusercontent.com/39067344/112299320-5b56c000-8ca0-11eb-8fbf-8d59f7a66cd1.png" width="114" height="128">
 </p>
 
+<h2>Future features</h2>
+
+<p>In the next releases, all current bugs will be fixed and added:</p>
+ <ul>
+  <li>Add move order changes</li>
+  <li>Updatе visual design</li>
+  <li>Main menu and settings menu</li>
+  <li>Visualization of AI weights of all possible cells</li>
+  <li>Gomoku game implementation (in the distant future)</li>
+</ul>
+
+<h2>Epilogue</h2>
+<p>Thanks to everyone who pays attention to this repository. For all questions and wishes, please contact us by mail <a href="mailto:3030cocacola@gmail.com">текст ссылки</a></p>
