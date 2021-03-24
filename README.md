@@ -53,4 +53,4 @@
 </ul>
 
 <h2>Epilogue</h2>
-<p>Thanks to everyone who pays attention to this repository. For all questions and wishes, please contact us by mail <a href="mailto:3030cocacola@gmail.com">текст ссылки</a></p>
+<p>Thanks to everyone who pays attention to this repository. For all questions and wishes, please contact us by <a href="mailto:3030cocacola@gmail.com">mail</a></p>
