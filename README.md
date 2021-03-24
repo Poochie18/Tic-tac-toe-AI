@@ -17,5 +17,15 @@
 
 <img src="https://user-images.githubusercontent.com/39067344/112280400-a7e4d000-8c8d-11eb-91b8-3d13e65151ef.gif" align="left">
 <p>The main point of the game is to arrange your three signs (X) on the field in one row. You will be confronted by a <strike>genius</strike> dumb AI. Throughout all matches, give the AI ​​a chance to win and learn from its wins and losses.</p> 
-<p>So in case of victories in the status bars of his moves for this match there will be an increase. This means that the AI ​​will remember them as high-ranking the next time it is similar.</p>
+
+<h3> Victorious case</h3>
+
+<img src="https://user-images.githubusercontent.com/39067344/112289481-05c9e580-8c97-11eb-96ad-95fa0d9b75c5.jpg"  width="138" height="192" align="right" >
+<p align="left">So in case of victories in the status bars of his moves for this match there will be an increase. This means that the AI ​​will remember them as high-ranking the next time it is similar. </p>
+
+<h3> Losing case</h3>
+
+<img src="https://user-images.githubusercontent.com/39067344/112289504-09f60300-8c97-11eb-9b44-9c8746936015.jpg" width="147" height="192" align="right">
 <p>In case of defeats in the status bars of his moves for this match, there will be a decrease in coefficients. This means the AI ​​will remember them as negative moves on the next similar move.</p>
+ 
+<p>Исключения</p>
