@@ -29,7 +29,5 @@
 <img src="https://user-images.githubusercontent.com/39067344/112289504-09f60300-8c97-11eb-9b44-9c8746936015.jpg" width="147" height="192" align="right">
 <p>In case of defeats in the status bars of his moves for this match, there will be a decrease in coefficients. This means the AI ​​will remember them as negative moves on the next similar move.</p>
   </div>
-<br>
-<br>
-<br>
+
 <h2>Technologies</h2>
