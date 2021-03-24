@@ -29,4 +29,5 @@
 <p>In case of defeats in the status bars of his moves for this match, there will be a decrease in coefficients. This means the AI ​​will remember them as negative moves on the next similar move.</p>
 <br>
 <br>
+<br>
 <h2>Technologies</h2>
