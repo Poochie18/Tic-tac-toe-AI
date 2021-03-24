@@ -21,11 +21,11 @@
 <h3> Victorious case</h3>
 
 
-<p align="left">So in case of victories in the status bars of his moves for this match there will be an increase. This means that the AI ​​will remember them as high-ranking the next time it is similar. <img src="https://user-images.githubusercontent.com/39067344/112289481-05c9e580-8c97-11eb-96ad-95fa0d9b75c5.jpg"  width="138" height="192" align="right" ></p>
+<p align="left"><img src="https://user-images.githubusercontent.com/39067344/112289481-05c9e580-8c97-11eb-96ad-95fa0d9b75c5.jpg"  width="138" height="192" align="right" >So in case of victories in the status bars of his moves for this match there will be an increase. This means that the AI ​​will remember them as high-ranking the next time it is similar. </p>
 
 <h3> Losing case</h3>
 
-<img src="https://user-images.githubusercontent.com/39067344/112289504-09f60300-8c97-11eb-9b44-9c8746936015.jpg" width="147" height="192" align="right">
-<p>In case of defeats in the status bars of his moves for this match, there will be a decrease in coefficients. This means the AI ​​will remember them as negative moves on the next similar move.</p>
+
+<p><img src="https://user-images.githubusercontent.com/39067344/112289504-09f60300-8c97-11eb-9b44-9c8746936015.jpg" width="147" height="192" align="right">In case of defeats in the status bars of his moves for this match, there will be a decrease in coefficients. This means the AI ​​will remember them as negative moves on the next similar move.</p>
  
 <p>Исключения</p>
