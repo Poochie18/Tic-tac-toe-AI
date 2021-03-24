@@ -10,6 +10,7 @@
 <p><a href="https://clck.ru/TtJAw">Reinforcement learning</a> is used as an algorithm for AI. Since this method is good for a small number of variations of the match outcome. For convenience and understanding of the work, a line of the best states of the AI has been added to the application, as well as its recalculated values after a positive / negative outcome of the match.</p>
 <p>Since the game is intended for educational purposes to show how <a href="https://clck.ru/TtJAw">Reinforcement learning</a> works, many points (visual, gameplay and logical) are not taken into account</p>
 
+<p>To download the demo version, click on the link below (only for android)</p>
 <a href="https://github.com/Poochie18/Tic-tac-toe-AI/releases/download/0.1.0/tic-tac-toe.v0.1.0r.apk">Tic-Tac-Toe</a>
 
 <h2>About</h2>
