@@ -28,22 +28,12 @@ public class GameLogic : MonoBehaviour
 
     private void Awake()
     {
-        if (PlayerPrefs.GetInt("FIRSTTIMEOPENING", 1) == 1)
-        {
-            Debug.Log("First Time Opening");
+#if UNITY_EDITOR
+        MakeFileForEditor();
+#elif UNITY_ANDROID
+        MakeFileForAndroid();
+#endif
 
-            PlayerPrefs.SetInt("FIRSTTIMEOPENING", 0);
-
-            string path = Application.persistentDataPath + "/text2.txt";
-            TextAsset txtAsset = Resources.Load("text2") as TextAsset;
-            string txt = txtAsset.text;
-            System.IO.File.WriteAllText(path, txt);
-
-        }
-        else
-        {
-            Debug.Log("NOT First Time Opening");
-        }
     }
 
 
@@ -80,19 +70,30 @@ public class GameLogic : MonoBehaviour
 
         if (!gamePause)
         {
-            AITurn(markedTiles);
-            CheckStatements();
+            
+            StartCoroutine(AITurnCouroutine());
         }
         
     }
 
+    IEnumerator AITurnCouroutine()
+    {
+        yield return new WaitForSeconds(0.5f);
+        AITurn(markedTiles);
+        CheckStatements();
+    }
+
     void CheckStatements()
     {
-        turnCount++;
-        uiManager.ChangePlayerIcon(whichPlayer);
         if (turnCount > 4)
             CheckingWinner();
-        whichPlayer = whichPlayer == 1 ? 2 : 1;
+        if (!gamePause)
+        {
+            whichPlayer = whichPlayer == 1 ? 2 : 1;
+            uiManager.ChangePlayerIcon(whichPlayer);
+        }
+        
+        
     }
 
 
@@ -105,7 +106,7 @@ public class GameLogic : MonoBehaviour
         //txts[0].text = playersIcons[whichPlayer];
         //txts[1].text = null;
         tile.interactable = false;
-        
+        turnCount++;
     }
 
 
@@ -128,7 +129,7 @@ public class GameLogic : MonoBehaviour
             if (win)
             {
                 uiManager.SetUpWinningText(whichPlayer);
-                //Debug.Log($"{ChangePlayerTurnSprite(whichPlayer);} has won!");
+                //Debug.Log($"{uiManager.SetUpWinningText(whichPlayer)} has won!");
                 gamePause = true;
                 CalculateNewWeight(whichPlayer - 1);
                 foreach (Button btn in titles)
@@ -155,6 +156,44 @@ public class GameLogic : MonoBehaviour
         GameSetup();
     }
 
+    private void MakeFileForEditor()
+    {
+        if (PlayerPrefs.GetInt("FIRSTTIMEOPENING", 1) == 1)
+        {
+            Debug.Log("First Time Opening");
+
+            PlayerPrefs.SetInt("FIRSTTIMEOPENING", 0);
+
+            string path = Application.persistentDataPath + "/text2.txt";
+            TextAsset txtAsset = Resources.Load("text2") as TextAsset;
+            string txt = txtAsset.text;
+            System.IO.File.WriteAllText(path, txt);
+
+        }
+        else
+        {
+            Debug.Log("NOT First Time Opening");
+        }
+    }
+    private void MakeFileForAndroid()
+    {
+        if (PlayerPrefs.GetInt("FIRSTTIMEOPENING", 1) == 1)
+        {
+            Debug.Log("First Time Opening");
+
+            PlayerPrefs.SetInt("FIRSTTIMEOPENING", 0);
+
+            string path = Application.persistentDataPath + "/data.txt";
+            TextAsset txtAsset = Resources.Load("data") as TextAsset;
+            string txt = txtAsset.text;
+            System.IO.File.WriteAllText(path, txt);
+
+        }
+        else
+        {
+            Debug.Log("NOT First Time Opening");
+        }
+    }
 }
 
 /*int right = -5;

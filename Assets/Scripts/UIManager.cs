@@ -16,11 +16,6 @@ public class UIManager : MonoBehaviour
 
     private Dictionary<int, string> playersIcons = new Dictionary<int, string> { { 1, "X" }, { 2, "O" } };
 
-    void Start()
-    {
-        whoseTurn.text = "Whose turn";
-    }
-
     public void ChangePlayerIcon(int playerIndex)
     {
         whoseTurn.text = "Whose turn";
@@ -42,5 +37,10 @@ public class UIManager : MonoBehaviour
     public void RestartGame()
     {
         RestartGameEvent();
+    }
+
+    public void ExitTheGame()
+    {
+        Application.Quit();
     }
 }

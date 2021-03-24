@@ -10,7 +10,7 @@ public class AIManager : MonoBehaviour
 {
     public event Action<int> ChangeTileIndex;
 
-    const float alpfa = 0.1f;
+    const float alpfa = 0.15f;
 
     private List<string> AISteps = new List<string>();
 
@@ -27,8 +27,13 @@ public class AIManager : MonoBehaviour
 
     private void Start()
     {
+#if UNITY_EDITOR
         path = Application.persistentDataPath + "/text2.txt";
-
+        Debug.Log("Editor");
+#elif UNITY_ANDROID
+        path = Application.persistentDataPath + "/data.txt";
+        Debug.Log("Android");
+#endif
         GameLogic.AITurn += FindPossipleTurns;
         GameLogic.CalculateNewWeight += CalculateNewWeights;
         WritingFile();
@@ -60,17 +65,18 @@ public class AIManager : MonoBehaviour
                 posibleMoves.Add(temp.Remove(i, 1).Insert(i, "2"));
             }
         }
-        ChosePosibleMoves();
+        ChoosePosibleMoves();
     }
 
-    private void ChosePosibleMoves()
+    private void ChoosePosibleMoves()
     {
         string bestMove = "";
         float bestScore = 0f;
 
         if(UnityEngine.Random.Range(0,10) == 1)
         {
-            bestMove = posibleMoves[UnityEngine.Random.Range(0, 9)];
+            int rnd = UnityEngine.Random.Range(0, posibleMoves.Count);
+            bestMove = posibleMoves[rnd];
             bestScore = allStatements[bestMove];
             //Debug.Log("Random");
         }
@@ -94,7 +100,7 @@ public class AIManager : MonoBehaviour
         }
         
         //Debug.Log($"{bestMove} - {bestScore}");
-        streamText.text += string.Join(" ", bestMove, Math.Round(bestScore, 3)) + "\n";
+        streamText.text += string.Join(" - ", bestMove, Math.Round(bestScore, 3)) + "\n";
         AISteps.Add(bestMove);
         MakeBestMove(bestMove);
     }
