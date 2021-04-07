@@ -8,20 +8,28 @@ using System.Globalization;
 
 public class GameLogic : MonoBehaviour
 {
-    public static event Action<int[]> AITurn;
-    public static event Action<int> CalculateNewWeight;
+    public static event Action<int[], int> AITurn;
+    public static event Action<int, float> CalculateNewWeight;
+    public static event Action<int> ChoseDictionary;
 
-    //public static Dictionary<string, float> allStatements = new Dictionary<string, float>();
+    [SerializeField] const float alpfa = 0.1f;
 
+    [SerializeField] private bool plVSbot;
+
+    [SerializeField] private int botTurn; //1 - X, 2 = 0
     [SerializeField] private int whichPlayer; //1 - X, 2 = 0
-    
     [SerializeField] private Button[] titles;
     [SerializeField] private bool gamePause = false;
     [SerializeField] private int[] markedTiles = new int[9];
 
-    private Dictionary<int, string> playersIcons = new Dictionary<int, string> { { 1, "X" }, { 2, "O" } };
+    [SerializeField] private Sprite[] playersIcons;
 
-    public static int turnCount;
+    private float alpfaDraw;
+
+    private int Xwins;
+    private int Owins;
+
+    private int turnCount;
 
     [SerializeField] private AIManager aiManager;
     [SerializeField] private UIManager uiManager;
@@ -29,9 +37,13 @@ public class GameLogic : MonoBehaviour
     private void Awake()
     {
 #if UNITY_EDITOR
-        MakeFileForEditor();
+        MakeFileForEditor("PCdictO", "PCdictX");
+        //PlayerPrefs.SetInt("FIRSTTIMEOPENING", 1);
+        //MakeFileForEditor("NewdictO", "NewdictX");
 #elif UNITY_ANDROID
-        MakeFileForAndroid();
+        MakeFileForEditor("dictO", "dictX");
+        //PlayerPrefs.SetInt("FIRSTTIMEOPENING", 1);
+        //MakeFileForEditor("NewdictO", "NewdictX");
 #endif
 
     }
@@ -39,78 +51,115 @@ public class GameLogic : MonoBehaviour
 
     private void Start()
     {
+        Xwins = PlayerPrefs.GetInt("Xwins");
+        Owins = PlayerPrefs.GetInt("Owins");
+
+        alpfaDraw = PlayerPrefs.GetFloat("AlpfaDraw");
+
+        uiManager.SetUpAIBattle += SetAIvsAIBattle;
         uiManager.RestartGameEvent += GameSetup;
+        uiManager.RestartAndSwitch += SetBotTurn;
         aiManager.ChangeTileIndex += ChangeStates;
+
         GameSetup();
     }
 
 
     void GameSetup()
     {
-        gamePause = false;
         whichPlayer = 1;
+        //botTurn = 2;
         turnCount = 0;
 
+        uiManager.SetIterationsCount(Xwins, Owins);
         aiManager.ClearAITemp();
         uiManager.ChangePlayerIcon(whichPlayer);
-
+        
         for (int i = 0; i < markedTiles.Length; i++)
         {
             markedTiles[i] = 0;
             titles[i].interactable = true;
-            titles[i].GetComponentInChildren<Text>().text = null;
+            titles[i].GetComponentInChildren<Image>().sprite = playersIcons[0];
         }
+        gamePause = false;
+        WhoseTurn();
     }
 
-
-    public void PressTheTile(int tileIndex)
+    private void SetBotTurn(int playerNumber)
     {
+        botTurn = playerNumber;
+    }
+
+    private void SetAIvsAIBattle(bool set)
+    {
+        plVSbot = set;
+        botTurn = 1;
+    }
+
+    private void WhoseTurn()
+    {
+        ChoseDictionary(botTurn);
+        
+        if (!plVSbot || whichPlayer == botTurn)
+        {
+            BotStep();
+        }
+    }
+    private void PressTheTile(int tileIndex)
+    {
+
         ChangeStates(tileIndex);
         CheckStatements();
 
+        BotStep();        
+    }
+
+    private void BotStep()
+    {
         if (!gamePause)
         {
-            
             StartCoroutine(AITurnCouroutine());
         }
-        
     }
 
     IEnumerator AITurnCouroutine()
     {
-        yield return new WaitForSeconds(0.5f);
-        AITurn(markedTiles);
+        yield return new WaitForSeconds(0.2f);
+        AITurn(markedTiles, botTurn);
         CheckStatements();
     }
 
-    void CheckStatements()
+    private void CheckStatements()
     {
         if (turnCount > 4)
+        {
             CheckingWinner();
+        }
         if (!gamePause)
         {
             whichPlayer = whichPlayer == 1 ? 2 : 1;
             uiManager.ChangePlayerIcon(whichPlayer);
         }
-        
-        
+
+        if (!plVSbot)
+        {
+            botTurn = whichPlayer;
+            WhoseTurn();
+        }
     }
 
 
-    void ChangeStates(int tileIndex)
+    private void ChangeStates(int tileIndex)
     {
         markedTiles[tileIndex] = whichPlayer;
         Button tile = titles[tileIndex];
-        tile.GetComponentInChildren<Text>().text = playersIcons[whichPlayer];
-        //Text[] txts = tile.GetComponentsInChildren<Text>();
-        //txts[0].text = playersIcons[whichPlayer];
-        //txts[1].text = null;
+        tile.GetComponentInChildren<Image>().sprite = playersIcons[whichPlayer];
         tile.interactable = false;
         turnCount++;
     }
 
 
-    void CheckingWinner()
+    private void CheckingWinner()
     {
 
         List<bool> winChecksList = new List<bool>()
@@ -128,54 +177,63 @@ public class GameLogic : MonoBehaviour
         {
             if (win)
             {
-                uiManager.SetUpWinningText(whichPlayer);
-                //Debug.Log($"{uiManager.SetUpWinningText(whichPlayer)} has won!");
                 gamePause = true;
-                CalculateNewWeight(whichPlayer - 1);
+                //Debug.Log($"player {whichPlayer} bot = {botTurn}");
+                ReCalrulateWeughts();
                 foreach (Button btn in titles)
                 {
                     btn.interactable = false;
                 }
-                continue;
+                SetWinsToUI(whichPlayer);
+                uiManager.SetUpWinningText(whichPlayer);
             }
         }
         CheckDraw();
     }
 
-    void CheckDraw()
+    private void ReCalrulateWeughts()
+    {
+        if (plVSbot)
+        {
+            CalculateNewWeight(whichPlayer == botTurn ? 1 : 0, alpfa);
+        }
+        else
+        {
+            aiManager.CalculateNewWeightsAI(whichPlayer, alpfa);
+            aiManager.CalculateNewWeightsAI(whichPlayer == 1 ? 2 : 1, alpfa);
+        }
+    }
+
+    private void SetWinsToUI(int winner)
+    {
+        if(winner == 1)
+        {
+            Xwins += 1;
+            PlayerPrefs.SetInt("Xwins", Xwins);
+        }
+        else
+        {
+            Owins += 1;
+            PlayerPrefs.SetInt("Owins", Owins);
+        }
+        uiManager.SetIterationsCount(Xwins, Owins);
+    }
+
+    private void CheckDraw()
     {
         if (turnCount == 9 && !gamePause)
         {
             uiManager.SetUpDrawText();
             gamePause = true;
+            alpfaDraw *= 0.99f;
+            PlayerPrefs.SetFloat("AlpfaDraw", alpfaDraw);
+            CalculateNewWeight(whichPlayer, alpfaDraw);
         }
+
+        
     }
 
-    public void Restart()
-    {
-        GameSetup();
-    }
-
-    private void MakeFileForEditor()
-    {
-        if (PlayerPrefs.GetInt("FIRSTTIMEOPENING", 1) == 1)
-        {
-            Debug.Log("First Time Opening");
-
-            PlayerPrefs.SetInt("FIRSTTIMEOPENING", 0);
-
-            string path = Application.persistentDataPath + "/text2.txt";
-            TextAsset txtAsset = Resources.Load("text2") as TextAsset;
-            string txt = txtAsset.text;
-            System.IO.File.WriteAllText(path, txt);
-
-        }
-        else
-        {
-            Debug.Log("NOT First Time Opening");
-        }
-    }
-    private void MakeFileForAndroid()
+    private void MakeFileForEditor(string fileNameO, string fileNameX)
     {
         if (PlayerPrefs.GetInt("FIRSTTIMEOPENING", 1) == 1)
         {
@@ -183,16 +241,25 @@ public class GameLogic : MonoBehaviour
 
             PlayerPrefs.SetInt("FIRSTTIMEOPENING", 0);
 
-            string path = Application.persistentDataPath + "/data.txt";
-            TextAsset txtAsset = Resources.Load("data") as TextAsset;
-            string txt = txtAsset.text;
-            System.IO.File.WriteAllText(path, txt);
+            WriteFileInDevise(fileNameX);
+            WriteFileInDevise(fileNameO);
 
+            PlayerPrefs.SetFloat("AlpfaDraw", -0.03f);
+            PlayerPrefs.SetInt("Xwins", 0);
+            PlayerPrefs.SetInt("Owins", 0);
         }
         else
         {
-            Debug.Log("NOT First Time Opening");
+            //Debug.Log("NOT First Time Opening");
         }
+    }
+
+    private void WriteFileInDevise(string fileName)
+    {
+        string path = Application.persistentDataPath + "/" + fileName + ".txt";
+        TextAsset txtAsset = Resources.Load(fileName) as TextAsset;
+        string txt = txtAsset.text;
+        System.IO.File.WriteAllText(path, txt);
     }
 }
 
