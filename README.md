@@ -45,10 +45,10 @@
 
 <p>In the next releases, all current bugs will be fixed and added:</p>
  <ul>
-  <li>Add move order changes</li>
-  <li>Updatе visual design</li>
-  <li>Main menu and settings menu</li>
-  <li>Visualization of AI weights of all possible cells</li>
+  <li><strike>Add move order changes</strike></li>
+  <li><strike>Updatе visual design</strike></li>
+  <li><strike>Main menu and settings menu</strike></li>
+  <li><strike>Visualization of AI weights of all possible cells</strike></li>
   <li>Gomoku game implementation (in the distant future)</li>
 </ul>
 
