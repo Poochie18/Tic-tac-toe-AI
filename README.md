@@ -55,9 +55,11 @@
 <h2>New versions features</h2>
 
 <h3>Version 1.0</h3>
-
+<p>This version is the first working version with the implementation of a sufficient minimum amount of functionality. It includes: playing for crosses, restarting the game, exiting and a table of bot moves.</p>
 <h3>Version 2.0</h3>
-
+<p>This version is an addition to the previous one, with the implementation of the intended functionality. Added move change (you can now play as X or O). 
+All this is included in the settings menu. They also include the number of bot training iterations. </p>
+<p>In the mathematical part, the coefficient of random moves has been changed. Since the bot is initially untrained, its moves should be more random in order to explore more possibilities. But over time, this coefficient decreases. This also applies to anyone's. Since draws are a high priority for O, they can be rewarded for not "losing"</p>
 <h3>Version 3.0</h3>
 
 <h2>Epilogue</h2>
