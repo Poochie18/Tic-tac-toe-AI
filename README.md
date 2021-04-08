@@ -54,13 +54,17 @@
 
 <h2>New versions features</h2>
 
-<h3>Version 1.0</h3>
+<h3>Version 0.1.0</h3>
 <p>This version is the first working version with the implementation of a sufficient minimum amount of functionality. It includes: playing for crosses, restarting the game, exiting and a table of bot moves.</p>
-<h3>Version 2.0</h3>
+<h3>Version 0.2.0</h3>
 <p>This version is an addition to the previous one, with the implementation of the intended functionality. Added move change (you can now play as X or O). 
 All this is included in the settings menu. They also include the number of bot training iterations. </p>
 <p>In the mathematical part, the coefficient of random moves has been changed. Since the bot is initially untrained, its moves should be more random in order to explore more possibilities. But over time, this coefficient decreases. This also applies to anyone's. Since draws are a high priority for O, they can be rewarded for not "losing"</p>
-<h3>Version 3.0</h3>
+<h3>Version 0.3.0</h3>
+<p>The main innovation in this version is the addition of a AI vs AI mode. Now you can watch the actions of two bots.</p>
+<p>Redesigned settings menu. Now you can change everything in it using switches. Added hiding of the bottom panel with the bot's moves. Now, instead of iterations, you can watch the number of victories X and O.</p>
+<p>Completely redesigned and UI(maybe not for the better)</p>
+<h3>Version 1.0.0</h3>
 
 <h2>Epilogue</h2>
 <p>Thanks to everyone who pays attention to this repository. For all questions and wishes, please contact us by <a href="mailto:3030cocacola@gmail.com">mail</a></p>
