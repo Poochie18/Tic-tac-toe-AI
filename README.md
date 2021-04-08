@@ -52,5 +52,13 @@
   <li>Gomoku game implementation (in the distant future)</li>
 </ul>
 
+<h2>New versions features</h2>
+
+<h3>Version 1.0</h3>
+
+<h3>Version 2.0</h3>
+
+<h3>Version 3.0</h3>
+
 <h2>Epilogue</h2>
 <p>Thanks to everyone who pays attention to this repository. For all questions and wishes, please contact us by <a href="mailto:3030cocacola@gmail.com">mail</a></p>
