@@ -74,5 +74,8 @@ All this is included in the settings menu. They also include the number of bot t
 <img src="https://user-images.githubusercontent.com/39067344/114400629-d24ded00-9baa-11eb-9d6b-7d5b9ea72f25.jpg" >
 </p>
 <h2>Epilogue</h2>
+
+
 <p>Thanks to everyone who pays attention to this repository. For all questions and wishes, please contact us by <a href="mailto:3030cocacola@gmail.com">mail</a></p>
+<p>You can download the game from the <a href="https://github.com/Poochie18/Tic-tac-toe-AI/releases/tag/1.0.0">link</a></p>
 <p>You can also visit the page at <a href="https://poochieco.itch.io/tic-tac-toe">itch.io</a> and download the game from there.</p>
