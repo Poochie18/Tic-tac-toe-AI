@@ -66,5 +66,12 @@ All this is included in the settings menu. They also include the number of bot t
 <p>Completely redesigned and UI(maybe not for the better)</p>
 <h3>Version 1.0.0</h3>
 
+<p>This is the release version. It fixes all bugs and implements all the desired features.</p>
+<p align="middle">
+<img src="https://user-images.githubusercontent.com/39067344/114400540-bf3b1d00-9baa-11eb-98a7-1af4d951a350.jpg" >
+<img src="https://user-images.githubusercontent.com/39067344/114400594-cb26df00-9baa-11eb-8ff4-7e37a0a8ffe1.gif" >
+<img src="https://user-images.githubusercontent.com/39067344/114400608-ce21cf80-9baa-11eb-9ac9-0bd16800c5af.gif" >
+<img src="https://user-images.githubusercontent.com/39067344/114400629-d24ded00-9baa-11eb-9d6b-7d5b9ea72f25.jpg" >
+</p>
 <h2>Epilogue</h2>
 <p>Thanks to everyone who pays attention to this repository. For all questions and wishes, please contact us by <a href="mailto:3030cocacola@gmail.com">mail</a></p>
