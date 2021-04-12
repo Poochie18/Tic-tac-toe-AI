@@ -75,3 +75,4 @@ All this is included in the settings menu. They also include the number of bot t
 </p>
 <h2>Epilogue</h2>
 <p>Thanks to everyone who pays attention to this repository. For all questions and wishes, please contact us by <a href="mailto:3030cocacola@gmail.com">mail</a></p>
+<p>You can also visit the page at <a href="itch.io">itch.io</a> and download the game from there.</p>
